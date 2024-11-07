@@ -41,6 +41,25 @@ export const App = () => {
     dispatch(sendCssStart(`${editorRef.current.getValue()}`));
   };
 
+  React.useEffect(() => {
+    ((data) =>
+      fetch("https://scss-to-css-converter.vercel.app/api/convert", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Log the value of 'isValid' from the response
+          console.log("Is the SCSS valid?", data.data.isValid);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        }, 20000))(`body { color: #000000; `);
+  }, []);
+
   return (
     <AppWrapper>
       <AppContainer>
